@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KoraHub - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #e9ecef;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-screen {
+            width: 100%;
+            max-width: 390px;
+            min-height: 100vh;
+            max-height: 844px;
+            background: linear-gradient(180deg, #f5f7f6 0%, #f8faf9 100%);
+            padding: 36px 24px 26px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.14);
+        }
+
+        .top-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 6px;
+        }
+
+        .logo-box {
+            position: relative;
+            width: 98px;
+            height: 62px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .speed-lines {
+            position: absolute;
+            left: 2px;
+            width: 44px;
+            height: 44px;
+        }
+
+        .speed-lines span {
+            position: absolute;
+            left: 0;
+            height: 3.5px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(67, 181, 86, 0.25), #39b54a);
+            transform: skewX(-22deg);
+        }
+
+        .speed-lines span:nth-child(1) {
+            top: 6px;
+            width: 28px;
+            left: 8px;
+        }
+
+        .speed-lines span:nth-child(2) {
+            top: 15px;
+            width: 36px;
+            left: 4px;
+        }
+
+        .speed-lines span:nth-child(3) {
+            top: 24px;
+            width: 40px;
+            left: 0;
+        }
+
+        .speed-lines span:nth-child(4) {
+            top: 33px;
+            width: 32px;
+            left: 6px;
+        }
+
+        .brand-title {
+            font-size: 32px;
+            font-weight: 800;
+            font-style: italic;
+            line-height: 1.05;
+            letter-spacing: -0.4px;
+        }
+
+        .brand-title .kora {
+            color: #111827;
+        }
+
+        .brand-title .hub {
+            color: #34a83e;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-top: 14px;
+        }
+
+        .welcome-section h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+
+        .welcome-section p {
+            font-size: 13px;
+            color: #4b5563;
+            font-weight: 400;
+        }
+
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 22px;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+            height: 52px;
+            background-color: #ffffff;
+            border: 1px solid #e2e8e5;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+        }
+
+        .input-group svg.left-icon {
+            width: 18px;
+            height: 18px;
+            color: #4b5563;
+            flex-shrink: 0;
+        }
+
+        .input-group input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 13.5px;
+            color: #111827;
+        }
+
+        .input-group input::placeholder {
+            color: #6b7280;
+        }
+
+        .toggle-password {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+        }
+
+        .toggle-password svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .login-btn {
+       margin-top: 8px;
+    text-align: center;
+    padding: 12px 2px 2px 2px;
+    text-decoration: none;
+    height: 50px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #248a34 0%, #176b25 100%);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(23, 107, 37, 0.28);
+    transition: transform 0.15s ease, filter 0.2s ease;
+        }
+
+        .login-btn:hover {
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+        }
+
+        .forgot-link {
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .forgot-link a {
+            font-size: 12.5px;
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-link a:hover {
+            text-decoration: underline;
+        }
+
+        .social-section {
+            margin-top: 26px;
+            text-align: center;
+        }
+
+        .social-label {
+            font-size: 12.5px;
+            color: #374151;
+            margin-bottom: 14px;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .social-btn {
+            width: 92px;
+            height: 44px;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            transition: transform 0.15s ease, border-color 0.2s ease;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-1px);
+            border-color: #cbd5e1;
+        }
+
+        .footer-signup {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 12.5px;
+            color: #374151;
+        }
+
+        .footer-signup a {
+            color: #1d8a31;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .footer-signup a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-screen">
+        <div>
+            <div class="top-brand">
+                <div class="logo-box">
+                    <div class="speed-lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <svg viewBox="0 0 100 100" width="52" height="52">
+                        <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#111827" stroke-width="3.5"/>
+                        <polygon points="50,28 67,40 61,60 39,60 33,40" fill="#111827"/>
+                        <polygon points="50,4 62,15 50,28 38,15" fill="#111827"/>
+                        <polygon points="92,38 82,53 67,40 74,25" fill="#111827"/>
+                        <polygon points="76,88 59,82 61,60 77,66" fill="#111827"/>
+                        <polygon points="24,88 23,66 39,60 41,82" fill="#111827"/>
+                        <polygon points="8,38 26,25 33,40 18,53" fill="#111827"/>
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <span class="kora">Kora</span><span class="hub">Hub</span>
+                </div>
+            </div>
+
+            <div class="welcome-section">
+                <h1>Welcome Back!</h1>
+                <p>Login to continue</p>
+            </div>
+
+            <form class="form-section" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <svg class="left-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <input type="text" id="userInput" placeholder="Email or Phone" required>
+                </div>
+
+                <div class="input-group">
+                    <svg class="left-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <input type="password" id="passwordInput" placeholder="Password" required>
+                    <button type="button" class="toggle-password" onclick="togglePassword()" aria-label="Show or hide password">
+                        <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+
+                <a href="create account.html" class="login-btn">Login</a>
+
+                <div class="forgot-link">
+                    <a href="forget pasword.html">Forgot Password?</a>
+                </div>
+            </form>
+
+            <div class="social-section">
+                <p class="social-label">Or continue with</p>
+                <div class="social-buttons">
+                    <button type="button" class="social-btn" aria-label="Continue with Google">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.5-.11 2.77-.95 3.63v3.02h4.71c2.76-2.54 4.26-6.28 4.26-9.39z"/>
+                            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-4.71-3.02c-1.08.72-2.45 1.16-3.22 1.16-2.48 0-4.58-1.67-5.33-3.92H1.83v3.11C3.8 21.22 7.59 24 12 24z"/>
+                            <path fill="#FBBC05" d="M6.67 15.31c-.19-.57-.3-1.18-.3-1.81s.11-1.24.3-1.81V8.58H1.83C.67 10.89 0 13.48 0 16.2s.67 5.31 1.83 7.62l4.84-3.11z"/>
+                            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.59 0 3.8 2.78 1.83 6.89l4.84 3.11c.75-2.25 2.85-3.92 5.33-3.92z"/>
+                        </svg>
+                    </button>
+
+                    <button type="button" class="social-btn" aria-label="Continue with Apple">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#111827">
+                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.96 6.32c.67-.81 1.12-1.94 1-3.07-.96.04-2.13.64-2.82 1.45-.61.71-1.15 1.86-1.01 2.97 1.07.08 2.16-.54 2.83-1.35z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-signup">
+            Don't have an account? <a href="#signup">Sign Up</a>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const input = document.getElementById("passwordInput");
+            input.type = input.type === "password" ? "text" : "password";
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            console.log("Login submitted");
+        }
+    </script>
+
+</body>
+</html>

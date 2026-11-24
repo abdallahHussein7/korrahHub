@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KoraHub - Split Payment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #e5e9e7;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .split-screen {
+            position: relative;
+            width: 100%;
+            max-width: 390px;
+            min-height: 100vh;
+            max-height: 844px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
+        }
+
+        .stadium-header {
+            position: relative;
+            width: 100%;
+            height: 168px;
+            background:
+                radial-gradient(circle at 22% 35%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.2) 8%, transparent 18%),
+                radial-gradient(circle at 75% 32%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.25) 9%, transparent 20%),
+                linear-gradient(180deg, #0b2540 0%, #164463 45%, #235743 60%, #24963c 62%, #136928 100%);
+            overflow: hidden;
+        }
+
+        .header-turf {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 62%;
+            bottom: 0;
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.05) 0px,
+                    rgba(255, 255, 255, 0.05) 24px,
+                    rgba(0, 0, 0, 0.05) 24px,
+                    rgba(0, 0, 0, 0.05) 48px
+                );
+        }
+
+        .header-topbar {
+            position: relative;
+            z-index: 3;
+            padding: 20px 18px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #ffffff;
+        }
+
+        .back-link {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-decoration: none;
+            background: rgba(15, 23, 42, 0.25);
+        }
+
+        .back-link svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .header-title {
+            font-size: 17px;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+        }
+
+        .spacer {
+            width: 34px;
+        }
+
+        .split-sheet {
+            position: relative;
+            z-index: 4;
+            margin-top: -18px;
+            flex: 1;
+            background-color: #ffffff;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            padding: 20px 20px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .amount-card {
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eceff1;
+        }
+
+        .split-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #15803d;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .split-badge svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .total-label {
+            font-size: 13px;
+            color: #4b5563;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .total-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #178236;
+            line-height: 1.2;
+        }
+
+        .players-section {
+            margin-top: 16px;
+        }
+
+        .players-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .players-header h2 {
+            font-size: 14.5px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .add-player-btn {
+            border: 1px solid #d1fae5;
+            background-color: #ecfdf5;
+            color: #15803d;
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 999px;
+            cursor: pointer;
+        }
+
+        .players-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 285px;
+            overflow-y: auto;
+        }
+
+        .player-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 4px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .player-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            flex-shrink: 0;
+        }
+
+        .av-1 { background: linear-gradient(135deg, #374151, #111827); }
+        .av-2 { background: linear-gradient(135deg, #78350f, #451a03); }
+        .av-3 { background: linear-gradient(135deg, #065f46, #022c22); }
+        .av-4 { background: linear-gradient(135deg, #1e3a8a, #172554); }
+        .av-5 { background: linear-gradient(135deg, #6b21a8, #3b0764); }
+
+        .player-name {
+            font-size: 14.5px;
+            font-weight: 500;
+            color: #111827;
+        }
+
+        .player-share {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #178236;
+        }
+
+        .status-msg {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #15803d;
+            font-weight: 600;
+            text-align: center;
+            min-height: 16px;
+        }
+
+        .continue-btn {
+            margin-top: 14px;
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #1d8a39 0%, #116628 100%);
+            color: #ffffff;
+            font-size: 15.5px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(17, 102, 40, 0.28);
+            transition: transform 0.15s ease, filter 0.2s ease;
+        }
+
+        .continue-btn:hover {
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="split-screen">
+        <div>
+            <div class="stadium-header">
+                <div class="header-turf"></div>
+                <div class="header-topbar">
+                    <a href="book-pitch.html" class="back-link" aria-label="Back to Book a Pitch">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                    </a>
+
+                    <span class="header-title">Split Payment</span>
+
+                    <div class="spacer"></div>
+                </div>
+            </div>
+
+            <div class="split-sheet">
+                <div>
+                    <div class="amount-card">
+                        <div class="split-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                <circle cx="9" cy="7" r="3"></circle>
+                                <circle cx="17" cy="17" r="3"></circle>
+                                <path d="M12 7h5l-2-2"></path>
+                                <path d="M12 17H7l2 2"></path>
+                            </svg>
+                            <span>SPLIT</span>
+                        </div>
+                        <div class="total-label">Total Amount</div>
+                        <div class="total-value" id="totalAmountText">400 EGP</div>
+                    </div>
+
+                    <div class="players-section">
+                        <div class="players-header">
+                            <h2>Split between players</h2>
+                            <button type="button" class="add-player-btn" onclick="addPlayer()">+ Add Player</button>
+                        </div>
+
+                        <div class="players-list" id="playersList">
+                            <div class="player-row">
+                                <div class="player-info">
+                                    <div class="player-avatar av-1">A</div>
+                                    <span class="player-name">Ahmed</span>
+                                </div>
+                                <span class="player-share">100 EGP</span>
+                            </div>
+
+                            <div class="player-row">
+                                <div class="player-info">
+                                    <div class="player-avatar av-2">O</div>
+                                    <span class="player-name">Omar</span>
+                                </div>
+                                <span class="player-share">100 EGP</span>
+                            </div>
+
+                            <div class="player-row">
+                                <div class="player-info">
+                                    <div class="player-avatar av-3">Y</div>
+                                    <span class="player-name">Youssef</span>
+                                </div>
+                                <span class="player-share">100 EGP</span>
+                            </div>
+
+                            <div class="player-row">
+                                <div class="player-info">
+                                    <div class="player-avatar av-4">M</div>
+                                    <span class="player-name">Mahmoud</span>
+                                </div>
+                                <span class="player-share">100 EGP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-msg" id="splitStatus"></div>
+                </div>
+
+                <button type="button" class="continue-btn" onclick="handleContinue()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const totalAmount = 400;
+        const extraNames = ["Karim", "Hassan", "Tarek", "Ziad", "Nader"];
+        const avatarClasses = ["av-1", "av-2", "av-3", "av-4", "av-5"];
+        let extraIndex = 0;
+
+        function recalculateShares() {
+            const rows = document.querySelectorAll("#playersList .player-row");
+            const count = rows.length;
+            const share = (totalAmount / count).toFixed(count % 1 === 0 || totalAmount % count === 0 ? 0 : 1);
+
+            rows.forEach(row => {
+                row.querySelector(".player-share").textContent = `${share} EGP`;
+            });
+        }
+
+        function addPlayer() {
+            const list = document.getElementById("playersList");
+            const name = extraNames[extraIndex % extraNames.length];
+            const avClass = avatarClasses[extraIndex % avatarClasses.length];
+            extraIndex++;
+
+            const row = document.createElement("div");
+            row.className = "player-row";
+            row.innerHTML = `
+                <div class="player-info">
+                    <div class="player-avatar ${avClass}">${name.charAt(0)}</div>
+                    <span class="player-name">${name}</span>
+                </div>
+                <span class="player-share">100 EGP</span>
+            `;
+            list.appendChild(row);
+            recalculateShares();
+        }
+
+        function handleContinue() {
+            const count = document.querySelectorAll("#playersList .player-row").length;
+            document.getElementById("splitStatus").textContent =
+                `Split confirmed across ${count} players (${totalAmount} EGP total)`;
+        }
+    </script>
+
+</body>
+</html>

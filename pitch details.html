@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KoraHub - Pitch Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #e5e9e7;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+ 
+        .details-screen {
+            position: relative;
+            width: 100%;
+            max-width: 390px;
+            min-height: 100vh;
+            max-height: 844px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
+        }
+
+        .stadium-hero {
+            position: relative;
+            width: 100%;
+            height: 290px;
+            background:
+                radial-gradient(circle at 24% 34%, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.25) 8%, transparent 18%),
+                radial-gradient(circle at 76% 34%, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.25) 8%, transparent 18%),
+                radial-gradient(circle at 50% 42%, rgba(147, 197, 253, 0.25) 0%, transparent 45%),
+                linear-gradient(180deg, #0b2442 0%, #153c63 44%, #1d5748 56%, #26993d 58%, #166e2a 100%);
+            overflow: hidden;
+        }
+
+        .stadium-arch {
+            position: absolute;
+            top: 86px;
+            left: 10%;
+            right: 10%;
+            height: 76px;
+            border-top: 4px solid rgba(203, 213, 225, 0.45);
+            border-radius: 50% 50% 0 0;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.85) 100%);
+        }
+
+        .pitch-lines {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 58%;
+            bottom: 0;
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.05) 0px,
+                    rgba(255, 255, 255, 0.05) 26px,
+                    rgba(0, 0, 0, 0.05) 26px,
+                    rgba(0, 0, 0, 0.05) 52px
+                );
+        }
+
+        .pitch-lines::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.72);
+        }
+
+        .pitch-lines::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 32%;
+            width: 68px;
+            height: 28px;
+            transform: translate(-50%, -50%);
+            border: 2px solid rgba(255, 255, 255, 0.72);
+            border-radius: 50%;
+        }
+
+        .hero-topbar {
+            position: relative;
+            z-index: 3;
+            padding: 22px 18px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #ffffff;
+        }
+
+        .icon-circle-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(15, 23, 42, 0.35);
+            backdrop-filter: blur(4px);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .icon-circle-btn svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .hero-title {
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .fav-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255, 255, 255, 0.35);
+            background-color: #147a32;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s ease, background-color 0.2s ease;
+        }
+
+        .fav-btn.active {
+            background-color: #dc2626;
+        }
+
+        .fav-btn svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        .details-sheet {
+            position: relative;
+            z-index: 4;
+            margin-top: -28px;
+            flex: 1;
+            background-color: #ffffff;
+            border-top-left-radius: 26px;
+            border-top-right-radius: 26px;
+            padding: 24px 22px 26px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .pitch-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .meta-line {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13.5px;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .star-gold {
+            color: #f59e0b;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .rating-bold {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .pin-icon {
+            width: 16px;
+            height: 16px;
+            color: #1f2937;
+            flex-shrink: 0;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #e5e7eb;
+            margin: 14px 0;
+        }
+
+        .specs-row {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            padding: 4px 0;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .spec-item svg {
+            width: 20px;
+            height: 20px;
+            color: #1f2937;
+        }
+
+        .price-block {
+            margin-top: 18px;
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .price-amount {
+            font-size: 26px;
+            font-weight: 800;
+            color: #178236;
+        }
+
+        .price-unit {
+            font-size: 15px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .about-section {
+            margin-top: 18px;
+        }
+
+        .about-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 6px 0;
+        }
+
+        .about-header h2 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .about-header svg {
+            width: 18px;
+            height: 18px;
+            color: #4b5563;
+            transition: transform 0.2s ease;
+        }
+
+        .about-header.open svg {
+            transform: rotate(90deg);
+        }
+
+        .about-text {
+            margin-top: 6px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #4b5563;
+            display: none;
+        }
+
+        .about-text.show {
+            display: block;
+        }
+
+        .book-btn {
+            margin-top: 22px;
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #1d8a39 0%, #116628 100%);
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(17, 102, 40, 0.28);
+            transition: transform 0.15s ease, filter 0.2s ease;
+        }
+
+        .book-btn:hover {
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="details-screen">
+        <div class="stadium-hero">
+            <div class="stadium-arch"></div>
+            <div class="pitch-lines"></div>
+
+            <div class="hero-topbar">
+                <a href="home.html" class="icon-circle-btn" aria-label="Back">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </a>
+
+                <span class="hero-title">Pitch Details</span>
+
+                <button type="button" class="fav-btn" id="favBtn" onclick="toggleFavorite()" aria-label="Save pitch">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <circle cx="12" cy="12" r="7"></circle>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="details-sheet">
+            <div>
+                <h1 class="pitch-title">Dream Arena</h1>
+
+                <div class="meta-line">
+                    <span class="star-gold">&#9733;</span>
+                    <span class="rating-bold">4.8</span>
+                    <span>(1.2k reviews)</span>
+                </div>
+
+                <div class="meta-line">
+                    <svg class="pin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span>6.5 km &bull; Nasr City</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="specs-row">
+                    <div class="spec-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                            <line x1="12" y1="4" x2="12" y2="20"></line>
+                            <circle cx="12" cy="12" r="2.5"></circle>
+                        </svg>
+                        <span>Indoor</span>
+                    </div>
+
+                    <div class="spec-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                            <rect x="4" y="3" width="16" height="18" rx="2"></rect>
+                            <line x1="4" y1="12" x2="20" y2="12"></line>
+                            <circle cx="12" cy="12" r="2.5"></circle>
+                        </svg>
+                        <span>5v5 / 7v7</span>
+                    </div>
+                </div>
+
+                <div class="price-block">
+                    <span class="price-amount">400 EGP</span>
+                    <span class="price-unit">/ hour</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="about-section">
+                    <div class="about-header" id="aboutHeader" onclick="toggleAbout()">
+                        <h2>About this pitch..</h2>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                    <p class="about-text" id="aboutText">
+                        FIFA-standard indoor turf pitch in Nasr City equipped with LED floodlights, locker rooms, showers, and free parking for players.
+                    </p>
+                </div>
+            </div>
+
+            <button type="button" class="book-btn" onclick="handleBookNow()">Book Now</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleFavorite() {
+            document.getElementById("favBtn").classList.toggle("active");
+        }
+
+        function toggleAbout() {
+            document.getElementById("aboutHeader").classList.toggle("open");
+            document.getElementById("aboutText").classList.toggle("show");
+        }
+
+        function handleBookNow() {
+            console.log("Proceeding to booking...");
+        }
+    </script>
+
+</body>
+</html>

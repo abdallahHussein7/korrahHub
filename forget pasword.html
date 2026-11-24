@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KoraHub - Forgot Password</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #e9ecef;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .forgot-screen {
+            width: 100%;
+            max-width: 390px;
+            min-height: 100vh;
+            max-height: 844px;
+            background: linear-gradient(180deg, #f5f7f6 0%, #f8faf9 100%);
+            padding: 72px 24px 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.14);
+        }
+
+        .icon-wrapper {
+            width: 112px;
+            height: 104px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .title-section {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .title-section h1 {
+            font-size: 23px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .title-section p {
+            font-size: 13.5px;
+            color: #4b5563;
+            line-height: 1.45;
+        }
+
+        .reset-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .input-group {
+            width: 100%;
+            height: 52px;
+            background-color: #ffffff;
+            border: 1px solid #e2e8e5;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+        }
+
+        .input-group svg {
+            width: 18px;
+            height: 18px;
+            color: #4b5563;
+            flex-shrink: 0;
+        }
+
+        .input-group input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 13.5px;
+            color: #111827;
+        }
+
+        .input-group input::placeholder {
+            color: #6b7280;
+        }
+
+        .reset-btn {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #248a34 0%, #176b25 100%);
+    color: #ffffff;
+    font-size: 15px;
+    text-decoration: none;
+    text-align: center;
+    padding-top: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(23, 107, 37, 0.28);
+    transition: transform 0.15s ease, filter 0.2s ease;
+        }
+
+        .reset-btn:hover {
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+        }
+
+        .back-link {
+            margin-top: 22px;
+            text-align: center;
+        }
+
+        .back-link a {
+            font-size: 13px;
+            font-weight: 600;
+            color: #111827;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .status-msg {
+            margin-top: 14px;
+            font-size: 12.5px;
+            color: #176b25;
+            font-weight: 500;
+            text-align: center;
+            min-height: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="forgot-screen">
+        <div class="icon-wrapper">
+            <svg viewBox="0 0 120 110" width="112" height="104" xmlns="http://www.w3.org/2000/svg">
+                <rect x="34" y="10" width="52" height="46" rx="8" fill="#1ea844"/>
+                <polyline points="48,33 56,41 72,25" fill="none" stroke="#ffffff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M22 44 L60 72 L98 44 L98 92 Q98 98 92 98 L28 98 Q22 98 22 92 Z" fill="#d8dce0"/>
+                <path d="M22 44 L60 72 L50 80 L22 58 Z" fill="#c2c7cc"/>
+                <path d="M98 44 L60 72 L70 80 L98 58 Z" fill="#c2c7cc"/>
+                <path d="M22 95 L56 68 Q60 65 64 68 L98 95 Q95 98 92 98 L28 98 Q25 98 22 95 Z" fill="#e5e8eb"/>
+            </svg>
+        </div>
+
+        <div class="title-section">
+            <h1>Forgot Password?</h1>
+            <p>Enter your email to receive<br>reset link</p>
+        </div>
+
+        <form class="reset-form" onsubmit="handleReset(event)">
+            <div class="input-group">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+                <input type="email" id="emailInput" placeholder="Email Address" required>
+            </div>
+
+            <a href="korahub.html" class="reset-btn"> Home Page </a>
+        </form>
+
+        <div class="status-msg" id="statusMsg"></div>
+
+        <div class="back-link">
+            <a href="login.html">Back to Login</a>
+        </div>
+    </div>
+
+    <script>
+        function handleReset(event) {
+            event.preventDefault();
+            const email = document.getElementById("emailInput").value.trim();
+            const msg = document.getElementById("statusMsg");
+            if (email) {
+                msg.textContent = "Reset link sent to " + email;
+            }
+        }
+    </script>
+
+</body>
+</html>

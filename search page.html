@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KoraHub - Search & Filter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #e5e9e7;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-screen {
+            width: 100%;
+            max-width: 390px;
+            min-height: 100vh;
+            max-height: 844px;
+            background-color: #f7f9f8;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
+        }
+
+        .top-bar {
+            padding: 20px 18px 12px;
+            background-color: #ffffff;
+        }
+
+        .header-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 14px;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 0;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: #111827;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .back-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .header-title-row h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .area-search {
+            width: 100%;
+            height: 44px;
+            background-color: #f1f3f2;
+            border-radius: 12px;
+            padding: 0 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .area-search svg {
+            width: 17px;
+            height: 17px;
+            color: #6b7280;
+            flex-shrink: 0;
+        }
+
+        .area-search input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 13px;
+            color: #111827;
+        }
+
+        .area-search input::placeholder {
+            color: #6b7280;
+        }
+
+        .chips-row {
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-chip {
+            flex: 1;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid #e2e8e5;
+            background-color: #f4f6f5;
+            color: #1f2937;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-chip.active {
+            background-color: #147a32;
+            border-color: #147a32;
+            color: #ffffff;
+        }
+
+        .map-section {
+            position: relative;
+            width: 100%;
+            height: 215px;
+            overflow: hidden;
+            background:
+                linear-gradient(135deg, rgba(214, 232, 219, 0.75), rgba(235, 238, 234, 0.85)),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent 0px,
+                    transparent 34px,
+                    rgba(255, 255, 255, 0.85) 34px,
+                    rgba(255, 255, 255, 0.85) 38px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent 0px,
+                    transparent 46px,
+                    rgba(255, 255, 255, 0.85) 46px,
+                    rgba(255, 255, 255, 0.85) 50px
+                );
+        }
+
+        .map-park {
+            position: absolute;
+            border-radius: 12px;
+            background-color: rgba(167, 224, 182, 0.55);
+        }
+
+        .map-park.p1 {
+            width: 84px;
+            height: 52px;
+            top: 22px;
+            left: 26px;
+        }
+
+        .map-park.p2 {
+            width: 96px;
+            height: 60px;
+            bottom: 24px;
+            right: 34px;
+        }
+
+        .map-pin {
+            position: absolute;
+            transform: translate(-50%, -100%);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .map-pin:hover {
+            transform: translate(-50%, -108%) scale(1.06);
+        }
+
+        .map-pin.main-pin {
+            left: 50%;
+            top: 56%;
+            z-index: 3;
+        }
+
+        .map-pin.sub-1 {
+            left: 25%;
+            top: 34%;
+        }
+
+        .map-pin.sub-2 {
+            left: 76%;
+            top: 38%;
+        }
+
+        .map-pin.sub-3 {
+            left: 22%;
+            top: 78%;
+        }
+
+        .filters-card {
+            position: relative;
+            z-index: 4;
+            margin-top: -14px;
+            background-color: #ffffff;
+            border-top-left-radius: 22px;
+            border-top-right-radius: 22px;
+            padding: 18px 20px 22px;
+            box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .filters-card h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 14px;
+        }
+
+        .filter-block {
+            margin-bottom: 16px;
+        }
+
+        .filter-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .filter-value {
+            color: #147a32;
+            font-weight: 700;
+        }
+
+        .range-slider {
+            width: 100%;
+            accent-color: #147a32;
+            cursor: pointer;
+        }
+
+        .apply-btn {
+            margin-top: 6px;
+            width: 100%;
+            height: 48px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #1d8a39 0%, #116628 100%);
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(17, 102, 40, 0.25);
+            transition: transform 0.15s ease, filter 0.2s ease;
+        }
+
+        .apply-btn:hover {
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+        }
+
+        .result-note {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #147a32;
+            font-weight: 500;
+            text-align: center;
+            min-height: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="search-screen">
+        <div>
+            <div class="top-bar">
+                <div class="header-title-row">
+                    <a href="home.html" class="back-btn" aria-label="Back to Home">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                    </a>
+                    <h1>Search</h1>
+                </div>
+
+                <div class="area-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="areaInput" placeholder="Search by area...">
+                </div>
+
+                <div class="chips-row">
+                    <button type="button" class="filter-chip active" onclick="selectType(this, 'All')">All</button>
+                    <button type="button" class="filter-chip" onclick="selectType(this, 'Indoor')">Indoor</button>
+                    <button type="button" class="filter-chip" onclick="selectType(this, 'Outdoor')">Outdoor</button>
+                </div>
+            </div>
+
+            <div class="map-section">
+                <div class="map-park p1"></div>
+                <div class="map-park p2"></div>
+
+                <div class="map-pin sub-1" title="Nasr City Pitch">
+                    <svg viewBox="0 0 24 32" width="22" height="30">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 9 12 20 12 20s12-11 12-20C24 5.37 18.63 0 12 0z" fill="#22a347"/>
+                        <circle cx="12" cy="11" r="4.5" fill="#ffffff"/>
+                    </svg>
+                </div>
+
+                <div class="map-pin sub-2" title="New Cairo Pitch">
+                    <svg viewBox="0 0 24 32" width="22" height="30">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 9 12 20 12 20s12-11 12-20C24 5.37 18.63 0 12 0z" fill="#22a347"/>
+                        <circle cx="12" cy="11" r="4.5" fill="#ffffff"/>
+                    </svg>
+                </div>
+
+                <div class="map-pin sub-3" title="Maadi Pitch">
+                    <svg viewBox="0 0 24 32" width="22" height="30">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 9 12 20 12 20s12-11 12-20C24 5.37 18.63 0 12 0z" fill="#22a347"/>
+                        <circle cx="12" cy="11" r="4.5" fill="#ffffff"/>
+                    </svg>
+                </div>
+
+                <div class="map-pin main-pin" title="Dream Arena">
+                    <svg viewBox="0 0 32 42" width="32" height="42">
+                        <path d="M16 0C7.16 0 0 7.16 0 16c0 12 16 26 16 26s16-14 16-26C32 7.16 24.84 0 16 0z" fill="#15803d"/>
+                        <circle cx="16" cy="15" r="6" fill="#ffffff"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters-card">
+            <h2>Filters</h2>
+
+            <div class="filter-block">
+                <div class="filter-label-row">
+                    <span>Price Range</span>
+                    <span class="filter-value" id="priceLabel">300 - 800 EGP</span>
+                </div>
+                <input type="range" class="range-slider" id="priceRange" min="150" max="1200" step="50" value="800" oninput="updatePriceLabel()">
+            </div>
+
+            <div class="filter-block">
+                <div class="filter-label-row">
+                    <span>Rating</span>
+                    <span class="filter-value" id="ratingLabel">4+ &#9733;</span>
+                </div>
+                <input type="range" class="range-slider" id="ratingRange" min="1" max="5" step="0.5" value="4" oninput="updateRatingLabel()">
+            </div>
+
+            <button type="button" class="apply-btn" onclick="applyFilters()">Apply Filters</button>
+            <div class="result-note" id="resultNote"></div>
+        </div>
+    </div>
+
+    <script>
+        let selectedType = "All";
+
+        function selectType(btn, type) {
+            selectedType = type;
+            document.querySelectorAll(".filter-chip").forEach(chip => chip.classList.remove("active"));
+            btn.classList.add("active");
+        }
+
+        function updatePriceLabel() {
+            const val = document.getElementById("priceRange").value;
+            document.getElementById("priceLabel").textContent = "300 - " + val + " EGP";
+        }
+
+        function updateRatingLabel() {
+            const val = document.getElementById("ratingRange").value;
+            document.getElementById("ratingLabel").innerHTML = val + "+ &#9733;";
+        }
+
+        function applyFilters() {
+            const area = document.getElementById("areaInput").value.trim() || "All Areas";
+            const maxPrice = document.getElementById("priceRange").value;
+            const minRating = document.getElementById("ratingRange").value;
+            document.getElementById("resultNote").textContent =
+                `Applied: ${selectedType} | ${area} | Up to ${maxPrice} EGP | ${minRating}+ ★`;
+        }
+    </script>
+
+</body>
+</html> 
